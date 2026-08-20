@@ -9,7 +9,7 @@
 </head>
 
 <body class="auth-page">
-    <div class="auth-logo"><img src="logo.svg" alt="Ride Sharing System"></div>
+    <div class="auth-logo">🚗 Ride Sharing System</div>
     <div class="auth-card">
         <h2>Welcome Back</h2>
 
@@ -23,10 +23,14 @@
                 <input type="password" id="password" placeholder="Enter your password">
             </div>
 
+            <p class="form-error" id="form-error" style="display: none; color: #ef4444; font-size: 13px;"></p>
+
             <button type="submit" class="btn-primary auth-submit">Sign In</button>
         </form>
         <p class="auth-footer">Don't have an account? <a href="signup.html">Create one</a></p>
     </div>
+
+    <script src="login.js"></script>
 </body>
 
 </html>
