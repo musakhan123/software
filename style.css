@@ -89,9 +89,7 @@ body {
     margin: 0 auto 16px auto;
 }
 .auth-page {
-    background: linear-gradient(to bottom, #4338ca, #6366f1);
-    min-height: 100vh;
-    padding: 40px 20px;
+    background-color: #4338ca;
 }
 .auth-logo {
     color: white;
@@ -101,17 +99,14 @@ body {
     margin-bottom: 24px;
 }
 .auth-logo img {
-    display: block;
     width: 224px;
     height: 44px;
-    margin: 0 auto;
 }
 .auth-card {
     background-color: white;
-    max-width: 420px;
-    margin: 0 auto;
+    margin :0 auto;
+    width: 420px;
     border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     padding: 32px;
     text-align: center;
 }
@@ -125,23 +120,25 @@ body {
     margin-bottom: 24px;
 }
 .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+  
 }
 .role-selector {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 16px;
 }
 .role-option {
     border: 1px solid #d1d5db;
     border-radius: 8px;
     padding: 20px;
+    width: 40%;
     text-align: center;
     cursor: pointer;
 }
-.role-option.selected { border: 2px solid #4338ca; background-color: #eef2ff; }
+/* Active / Selected state for Role Option */
+.role-option.selected {
+    border-color: #4338ca;
+    background-color: #e0e7ff;
+}
 .role-icon {
     font-size: 28px;
     margin-bottom: 8px;
@@ -182,5 +179,5 @@ body {
     font-size: 14px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    box-sizing: border-box;
+    
 }
