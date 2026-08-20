@@ -6,8 +6,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
-.navbar{
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,12 +18,15 @@ body {
     font-size: 20px;
     font-weight: bold;
 }
-
+.navbar .logo img {
+    display: block;
+    width: 224px;
+    height: 44px;
+}
 .nav-links {
     display: flex;
     gap: 24px;
 }
-
 .nav-links a {
     color: white;
     text-decoration: none;
@@ -36,12 +38,10 @@ body {
     text-align: center;
     padding: 100px 20px;
 }
-
 .hero h1 {
     font-size: 48px;
     margin-bottom: 20px;
 }
-
 .hero p {
     font-size: 18px;
     max-width: 600px;
@@ -52,22 +52,20 @@ body {
     justify-content: center;
     gap: 16px;
 }
-
 .btn-primary,
 .btn-secondary {
     padding: 14px 28px;
     font-size: 16px;
     font-weight: 600;
+    text-decoration: none;
     border-radius: 8px;
     cursor: pointer;
     border: 2px solid white;
 }
-
 .btn-primary {
     background-color: white;
     color: #4338ca;
 }
-
 .btn-secondary {
     background-color: transparent;
     color: white;
@@ -79,7 +77,6 @@ body {
     padding: 60px 40px;
     background-color: white;
 }
-
 .card {
     width: 260px;
     background-color: white;
@@ -104,13 +101,18 @@ body {
     min-height: 100vh;
     padding: 40px 20px;
 }
-
 .auth-logo {
     color: white;
     font-weight: bold;
     font-size: 18px;
     text-align: center;
     margin-bottom: 24px;
+}
+.auth-logo img {
+    display: block;
+    width: 224px;
+    height: 44px;
+    margin: 0 auto;
 }
 .auth-card {
     background-color: white;
@@ -121,18 +123,15 @@ body {
     padding: 32px;
     text-align: center;
 }
-
 .auth-card h2 {
     font-size: 22px;
     margin-bottom: 6px;
 }
-
 .auth-card .subtitle {
     color: #6b7280;
     font-size: 14px;
     margin-bottom: 24px;
 }
-
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -143,7 +142,6 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 16px;
 }
-
 .role-option {
     border: 1px solid #d1d5db;
     border-radius: 8px;
@@ -151,17 +149,14 @@ body {
     text-align: center;
     cursor: pointer;
 }
-
 .role-icon {
     font-size: 28px;
     margin-bottom: 8px;
 }
-
 .role-option p {
     font-weight: 600;
     font-size: 14px;
 }
-
 .auth-submit {
     width: 100%;
     background-color: #4338ca;
@@ -170,11 +165,9 @@ body {
     margin-top: 8px;
     margin-bottom: 16px;
 }
-
 .auth-footer {
     font-size: 14px;
 }
-
 .auth-footer a {
     color: #4338ca;
     font-style: italic;
@@ -184,14 +177,12 @@ body {
     margin-bottom: 16px;
     text-align: left;
 }
-
 .form-group label {
     display: block;
     font-weight: 600;
     font-size: 14px;
     margin-bottom: 6px;
 }
-
 .form-group input {
     width: 100%;
     padding: 12px;

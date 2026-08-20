@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rides - Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">🚗 Admin Panel</div>
+            <nav class="sidebar-nav">
+                <a href="admin.html">Dashboard</a>
+                <a href="users.html">Users</a>
+                <a href="drivers.html">Drivers</a>
+                <a href="rides.html" class="active">Rides</a>
+                <a href="reviews.html">Reviews</a>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <h1>All Rides</h1>
+
+            <div class="panel">
+                <h2>Ride History</h2>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Driver</th>
+                            <th>Passenger</th>
+                            <th>Fare (PKR)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hayatabad → University Town</td>
+                            <td>Ahmad Khan</td>
+                            <td>Sara Ahmed</td>
+                            <td>350</td>
+                            <td><span class="status approved">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Saddar → Ring Road</td>
+                            <td>Bilal Raza</td>
+                            <td>Usman Tariq</td>
+                            <td>420</td>
+                            <td><span class="status pending">In Progress</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
