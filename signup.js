@@ -14,7 +14,7 @@ roleOptions.forEach(function (option) {
 const form = document.querySelector(".auth-form");
 const errorBox = document.getElementById("form-error");
 
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const name = document.getElementById("name").value.trim();
@@ -23,39 +23,34 @@ form.addEventListener("submit", function (event) {
     const password = document.getElementById("password").value;
 
     if (!name || !email || !password) {
-        errorBox.textContent = "Please fill in all fields.";
-        errorBox.style.display = "block";
+        showError("Please fill in all fields.");
         return;
     }
-
     if (password.length < 6) {
-        errorBox.textContent = "Password must be at least 6 characters.";
-        errorBox.style.display = "block";
+        showError("Password must be at least 6 characters.");
         return;
     }
-
     if (!selectedRole) {
-        errorBox.textContent = "Please select whether you're a passenger or driver.";
-        errorBox.style.display = "block";
+        showError("Please select whether you're a passenger or driver.");
         return;
     }
 
-    fetch("http://localhost:3000/signup", {
+    const res = await fetch("http://localhost:3000/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, password, role: selectedRole })
-    })
-        .then(function (res) {
-            return res.json();
-        })
-        .then(function (data) {
-            if (data.error) {
-                errorBox.textContent = data.error;
-                errorBox.style.display = "block";
-            } else {
-                errorBox.style.display = "none";
-                alert("Account created! Redirecting to login...");
-                window.location.href = "login.html";
-            }
-        });
+    });
+    const data = await res.json();
+
+    if (data.error) {
+        showError(data.error);
+    } else {
+        alert("Account created! Redirecting to login...");
+        window.location.href = "login.html";
+    }
 });
+
+function showError(message) {
+    errorBox.textContent = message;
+    errorBox.style.display = "block";
+}
