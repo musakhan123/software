@@ -1,15 +1,17 @@
 const roleOptions = document.querySelectorAll(".role-option");
 let selectedRole = null;
 
-roleOptions.forEach(function (option) {
-    option.addEventListener("click", function () {
-        roleOptions.forEach(function (o) {
-            o.classList.remove("selected");
-        });
-        option.classList.add("selected");
-        selectedRole = option.dataset.role;
-    });
-});
+function choosePassenger() {
+    document.getElementById("passenger-box").classList.add("selected");
+    document.getElementById("driver-box").classList.remove("selected");
+    selectedRole = "passenger";
+}
+
+function chooseDriver() {
+    document.getElementById("driver-box").classList.add("selected");
+    document.getElementById("passenger-box").classList.remove("selected");
+    selectedRole = "driver";
+}
 
 const form = document.querySelector(".auth-form");
 const errorBox = document.getElementById("form-error");
