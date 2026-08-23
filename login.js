@@ -7,21 +7,22 @@ form.addEventListener("submit", function (event) {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    const savedUserJSON = localStorage.getItem("registeredUser");
-
-    if (!savedUserJSON) {
-        errorBox.textContent = "No account found. Please sign up first.";
-        errorBox.style.display = "block";
-        return;
-    }
-
-    const savedUser = JSON.parse(savedUserJSON);
-
-    if (email === savedUser.email && password === savedUser.password) {
-        errorBox.style.display = "none";
-        alert("Welcome back, " + savedUser.name + "!");
-    } else {
-        errorBox.textContent = "Incorrect email or password.";
-        errorBox.style.display = "block";
-    }
+    // ask our server if this email + password match a real account
+    fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    })
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            if (data.error) {
+                errorBox.textContent = data.error;
+                errorBox.style.display = "block";
+            } else {
+                errorBox.style.display = "none";
+                alert("Welcome back, " + data.name + "!");
+            }
+        });
 });
