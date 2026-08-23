@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ride Sharing System</title>
+
+    <link rel="stylesheet" href="driver.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <div class="brand">
+            <div class="brand-logo">
+                <!-- Inline car logo so no image file is required -->
+                <svg viewBox="0 0 80 50" aria-hidden="true">
+                    <rect x="16" y="18" width="48" height="19" rx="5"></rect>
+                    <path d="M24 18 L30 8 H50 L57 18 Z"></path>
+
+                    <circle cx="27" cy="39" r="6"></circle>
+                    <circle cx="54" cy="39" r="6"></circle>
+
+                    <circle class="wheel-inner" cx="27" cy="39" r="2"></circle>
+                    <circle class="wheel-inner" cx="54" cy="39" r="2"></circle>
+                </svg>
+            </div>
+
+            <span>Ride Sharing System</span>
+        </div>
+
+
+        <div class="navbar-right">
+
+            <div class="user-status">
+                <span class="online-dot"></span>
+                <span id="currentUserName">Musa</span>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         APPLICATION
+    ====================================================== -->
+
+    <main class="app-container">
+
+        <!-- =================================================
+             DASHBOARD PAGE
+        ================================================== -->
+
+        <section id="dashboardPage" class="page active-page">
+
+            <div class="dashboard-heading">
+
+                <div>
+                    <h1>Manage your rides and vehicles, <span id="dashboardUserName">Musa</span>.</h1>
+                    <p>
+                        Manage your vehicles, post rides and keep track
+                        of your active trips.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ===============================
+                 STATISTICS
+            ================================ -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-title">
+                        TOTAL RIDES
+                    </div>
+
+                    <div class="stat-number green">
+                        <span id="totalRides">1</span>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-title">
+                        ACTIVE RIDES
+                    </div>
+
+                    <div class="stat-number blue">
+                        <span id="activeRidesCount">1</span>
+                    </div>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-title">
+                        MY VEHICLES
+                    </div>
+
+                    <div class="stat-number green">
+                        <span id="vehicleCount">2</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- ===============================
+                 SETUP PROGRESS
+            ================================ -->
+
+            <div class="setup-card">
+
+                <div class="progress-circle" id="progressCircle">
+                    <span id="progressPercentage">67%</span>
+                </div>
+
+                <div class="setup-content">
+
+                    <h2>Setup Progress</h2>
+
+                    <p id="setupMessage">
+                        Complete your profile setup to start driving.
+                    </p>
+
+                    <div class="progress-bar">
+                        <div
+                            class="progress-fill"
+                            id="progressFill">
+                        </div>
+                    </div>
+
+                </div>
+
+                <button
+                    class="checklist-link"
+                    onclick="showPage('checklistPage')">
+
+                    View Checklist →
+                </button>
+
+            </div>
+
+
+            <!-- ===============================
+                 DASHBOARD TWO COLUMNS
+            ================================ -->
+
+            <div class="dashboard-columns">
+
+
+                <!-- =====================================
+                     POST RIDE
+                ====================================== -->
+
+                <div class="dashboard-card post-ride-card">
+
+                    <div class="card-header">
+                        <h2>Post a new ride</h2>
+                    </div>
+
+
+                    <form id="rideForm">
+
+                        <div class="form-group">
+
+                            <label for="rideVehicle">
+                                Vehicle
+                            </label>
+
+                            <select id="rideVehicle" required>
+
+                                <option value="">
+                                    Select your vehicle
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="origin">
+                                    Origin
+                                </label>
+
+                                <select id="origin" required>
+
+                                    <option value="">
+                                        Origin
+                                    </option>
+
+                                    <option value="Peshawar">
+                                        Peshawar
+                                    </option>
+
+                                    <option value="Islamabad">
+                                        Islamabad
+                                    </option>
+
+                                    <option value="Lahore">
+                                        Lahore
+                                    </option>
+
+                                    <option value="Rawalpindi">
+                                        Rawalpindi
+                                    </option>
+
+                                    <option value="Mardan">
+                                        Mardan
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="destination">
+                                    Destination
+                                </label>
+
+                                <select id="destination" required>
+
+                                    <option value="">
+                                        Destination
+                                    </option>
+
+                                    <option value="Peshawar">
+                                        Peshawar
+                                    </option>
+
+                                    <option value="Islamabad">
+                                        Islamabad
+                                    </option>
+
+                                    <option value="Lahore">
+                                        Lahore
+                                    </option>
+
+                                    <option value="Rawalpindi">
+                                        Rawalpindi
+                                    </option>
+
+                                    <option value="Mardan">
+                                        Mardan
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="departureTime">
+                                    Departure time
+                                </label>
+
+                                <input
+                                    type="datetime-local"
+                                    id="departureTime"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="rideSeats">
+                                    Total Seats
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="rideSeats"
+                                    placeholder="eg. 3"
+                                    min="1"
+                                    max="10"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="primary-btn">
+
+                            Post Ride
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- =====================================
+                     MY VEHICLES
+                ====================================== -->
+
+                <div class="dashboard-card vehicles-card">
+
+                    <div class="card-header vehicles-header">
+
+                        <h2>My Vehicles</h2>
+
+                        <button
+                            class="add-vehicle-btn"
+                            onclick="showPage('addVehiclePage')">
+
+                            <span>+</span>
+                            Add Vehicle
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="vehicle-table-wrapper">
+
+                        <table class="vehicle-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Vehicle</th>
+                                    <th>Plate</th>
+                                    <th>Seats</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="vehicleTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 ACTIVE RIDES
+            ====================================== -->
+
+            <div class="dashboard-card active-rides-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>My Active Rides</h2>
+                        <p class="card-subtitle">
+                            Rides currently available for passengers
+                        </p>
+                    </div>
+
+                    <span class="active-badge">
+                        Active
+                    </span>
+
+                </div>
+
+
+                <div id="activeRidesContainer">
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             CHECKLIST PAGE
+        ================================================== -->
+
+        <section id="checklistPage" class="page">
+
+            <button
+                class="back-button"
+                onclick="showPage('dashboardPage')">
+
+                ←
+
+            </button>
+
+
+            <div class="profile-banner">
+
+                <div class="profile-left">
+
+                    <div class="avatar">
+                        M
+                    </div>
+
+                    <div>
+
+                        <h1 id="profileUserName">Musa</h1>
+
+                        <p>
+                            <span id="profileUserEmail">musa@gmail.com</span>
+                        </p>
+
+                        <span class="driver-badge">
+                            🚗 Driver
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="member-date">
+                    Member since 25-May-2026
+                </div>
+
+            </div>
+
+
+            <div class="checklist-card">
+
+                <div class="checklist-heading">
+
+                    <h2>
+                        ✓ Account Checklist
+                    </h2>
+
+                    <div class="large-progress">
+
+                        <div
+                            id="checklistProgressBar"
+                            class="large-progress-fill">
+                        </div>
+
+                    </div>
+
+                    <p id="checklistProgressText">
+                        67% setup complete
+                    </p>
+
+                </div>
+
+
+                <div class="checklist-items">
+
+
+                    <!-- Identity -->
+
+                    <div class="check-item completed">
+
+                        <div class="check-icon">
+                            ✓
+                        </div>
+
+                        <div class="check-text">
+
+                            <h3>
+                                Identity Verified
+                            </h3>
+
+                            <p>
+                                Documents approved by admin
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Vehicle -->
+
+                    <div
+                        class="check-item"
+                        id="vehicleChecklistItem">
+
+                        <div
+                            class="check-icon"
+                            id="vehicleCheckIcon">
+
+                            ✓
+
+                        </div>
+
+                        <div class="check-text">
+
+                            <h3>
+                                Vehicle Registered
+                            </h3>
+
+                            <p id="vehicleChecklistText">
+                                Active vehicle registration on file
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Phone -->
+
+                    <div
+                        class="check-item"
+                        id="phoneChecklistItem">
+
+                        <div
+                            class="check-icon"
+                            id="phoneCheckIcon">
+
+                            ×
+
+                        </div>
+
+                        <div class="check-text">
+
+                            <h3>
+                                Profile Complete
+                            </h3>
+
+                            <p id="phoneChecklistText">
+                                No phone number added
+                            </p>
+
+                        </div>
+
+                        <button
+                            class="small-action-btn"
+                            onclick="addPhone()">
+
+                            Add Phone
+
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ADD VEHICLE PAGE
+        ================================================== -->
+
+        <section id="addVehiclePage" class="page">
+
+            <div class="page-title-row">
+
+                <button
+                    class="back-button"
+                    onclick="showPage('dashboardPage')">
+
+                    ←
+
+                </button>
+
+                <h1>
+                    Add a new vehicle
+                </h1>
+
+            </div>
+
+
+            <div class="add-vehicle-container">
+
+                <div class="dashboard-card add-vehicle-card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Vehicle Details
+                        </h2>
+
+                    </div>
+
+
+                    <form id="vehicleForm">
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="make">
+                                    Make
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="make"
+                                    placeholder="eg. Toyota"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="model">
+                                    Model
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="model"
+                                    placeholder="eg. Corolla 2019"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="color">
+                                    Color
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="color"
+                                    placeholder="eg. Pink"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="plate">
+                                    Plate Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="plate"
+                                    placeholder="eg. ABC-19"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="capacity">
+                                Seating Capacity
+                            </label>
+
+                            <input
+                                type="number"
+                                id="capacity"
+                                placeholder="eg. 3"
+                                min="1"
+                                max="20"
+                                required>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="primary-btn">
+
+                            Add Vehicle
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         PHONE MODAL
+    ====================================================== -->
+
+    <div
+        id="phoneModal"
+        class="modal">
+
+        <div class="modal-content">
+
+            <button
+                class="modal-close"
+                onclick="closePhoneModal()">
+
+                ×
+
+            </button>
+
+            <h2>
+                Add Phone Number
+            </h2>
+
+            <p>
+                Add your phone number to complete your profile.
+            </p>
+
+            <input
+                type="tel"
+                id="phoneNumber"
+                placeholder="+92 300 1234567">
+
+            <button
+                class="primary-btn"
+                onclick="savePhone()">
+
+                Save Phone Number
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TOAST MESSAGE
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast">
+
+        <span id="toastMessage">
+            Success
+        </span>
+
+    </div>
+
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

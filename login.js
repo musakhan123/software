@@ -7,7 +7,6 @@ form.addEventListener("submit", function (event) {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    // ask our server if this email + password match a real account
     fetch("http://localhost:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -22,7 +21,11 @@ form.addEventListener("submit", function (event) {
                 errorBox.style.display = "block";
             } else {
                 errorBox.style.display = "none";
-                alert("Welcome back, " + data.name + "!");
+                if (data.role === "driver") {
+                    window.location.href = "driver.html";
+                } else {
+                    window.location.href = "passenger-dashboard.html";
+                }
             }
         });
 });

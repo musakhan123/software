@@ -40,7 +40,6 @@ form.addEventListener("submit", function (event) {
         return;
     }
 
-    // send the form data to our server
     fetch("http://localhost:3000/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

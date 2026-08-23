@@ -1,7 +1,6 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
-const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(cors());
@@ -10,7 +9,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "admin123",
     database: "ride_sharing"
 });
 
@@ -29,36 +28,35 @@ app.post("/signup", function (req, res) {
         return res.status(400).json({ error: "Missing fields" });
     }
 
-    bcrypt.hash(password, 10, function (err, hashedPassword) {
-        const sql = "INSERT INTO users (name, email, phone, password, role) VALUES (?, ?, ?, ?, ?)";
-        db.query(sql, [name, email, phone, hashedPassword, role], function (err, result) {
-            if (err) {
-                if (err.code === "ER_DUP_ENTRY") {
-                    return res.status(400).json({ error: "Email already registered" });
-                }
-                return res.status(500).json({ error: "Server error" });
+    const sql = "INSERT INTO users (name, email, phone, password, role) VALUES (?, ?, ?, ?, ?)";
+    db.query(sql, [name, email, phone, password, role], function (err, result) {
+        if (err) {
+            console.log(err);
+            if (err.code === "ER_DUP_ENTRY") {
+                return res.status(400).json({ error: "Email already registered" });
             }
-            res.json({ message: "Account created" });
-        });
+            return res.status(500).json({ error: "Server error" });
+        }
+        res.json({ message: "Account created" });
     });
 });
 
 app.post("/login", function (req, res) {
     const { email, password } = req.body;
 
-    const sql = "SELECT * FROM users WHERE email = ?";
-    db.query(sql, [email], function (err, results) {
-        if (err || results.length === 0) {
+    const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    db.query(sql, [email, password], function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({ error: "Server error" });
+        }
+
+        if (results.length === 0) {
             return res.status(400).json({ error: "Incorrect email or password" });
         }
 
         const user = results[0];
-        bcrypt.compare(password, user.password, function (err, match) {
-            if (!match) {
-                return res.status(400).json({ error: "Incorrect email or password" });
-            }
-            res.json({ message: "Login successful", name: user.name, role: user.role });
-        });
+        res.json({ message: "Login successful", name: user.name, role: user.role });
     });
 });
 
