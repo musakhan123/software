@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ride Sharing System</title>
+<style>
+  :root{
+    --indigo-800:#3730a3;
+    --indigo-700:#4338ca;
+    --indigo-600:#4f46e5;
+    --indigo-500:#6366f1;
+    --green:#22c55e;
+    --red:#ef4444;
+    --blue:#3b82f6;
+    --text-dark:#1f2937;
+    --text-mid:#6b7280;
+    --text-light:#9ca3af;
+    --border:#e5e7eb;
+    --bg:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background:#ffffff;
+    color:var(--text-dark);
+  }
+
+  /* Header */
+  header{
+    background:linear-gradient(90deg,var(--indigo-700),var(--indigo-600));
+    color:#fff;
+    padding:18px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:3px solid #1e1b4b;
+  }
+  .brand{
+    font-size:20px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    font-weight:600;
+  }
+  nav a{
+    color:#fff;
+    text-decoration:none;
+    opacity:0.95;
+  }
+  .user-pill{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .status-dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--green);
+    display:inline-block;
+  }
+  .logout-btn{
+    background:var(--indigo-500);
+    border:none;
+    color:#fff;
+    font-weight:700;
+    padding:9px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .logout-btn:hover{ background:var(--indigo-600); }
+
+  /* Main layout */
+  main{
+    max-width:1000px;
+    margin:0 auto;
+    padding:36px 32px 60px;
+  }
+  .greeting{
+    font-size:22px;
+    color:#374151;
+    margin:0 0 22px;
+    font-weight:400;
+  }
+  .greeting b{ font-weight:600; }
+
+  /* Stat cards */
+  .stats{
+    display:flex;
+    gap:24px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .stat-card{
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 4px 14px rgba(0,0,0,0.10);
+    padding:20px 30px;
+    text-align:center;
+    min-width:170px;
+    flex:1 1 170px;
+  }
+  .stat-label{
+    font-size:12px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--text-mid);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .stat-value{
+    font-size:34px;
+    font-weight:700;
+  }
+  .stat-value.total{ color:var(--blue); }
+  .stat-value.completed{ color:var(--green); }
+  .stat-value.cancelled{ color:var(--red); }
+
+  /* Search card */
+  .card{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    padding:28px 30px;
+    margin-bottom:28px;
+  }
+  .card h2{
+    margin:0 0 14px;
+    font-size:18px;
+    font-weight:700;
+  }
+  hr{
+    border:none;
+    border-top:1px solid var(--border);
+    margin:0 0 20px;
+  }
+  .search-row{
+    display:flex;
+    gap:20px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  select{
+    flex:1 1 260px;
+    padding:13px 14px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-size:15px;
+    color:var(--text-dark);
+    background:#fff;
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><path d='M1 1l5 5 5-5' stroke='%23374151' stroke-width='2' fill='none'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+  }
+  select:invalid{ color:var(--text-light); }
+  .search-btn{
+    width:100%;
+    padding:14px;
+    background:var(--indigo-600);
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .search-btn:hover{ background:var(--indigo-700); }
+
+  .status-msg{
+    text-align:center;
+    font-weight:700;
+    margin-top:18px;
+    font-size:15px;
+  }
+
+  /* Ride result */
+  .ride-result{
+    margin-top:20px;
+  }
+  .ride-count{
+    font-size:13px;
+    color:var(--text-mid);
+    margin-bottom:10px;
+  }
+  .ride-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .ride-info .route{ font-weight:700; margin-bottom:4px; }
+  .ride-info .meta{ color:var(--text-mid); font-size:14px; }
+  .seats-pill{
+    background:#dcfce7;
+    color:#15803d;
+    font-weight:700;
+    font-size:13px;
+    padding:6px 12px;
+    border-radius:999px;
+  }
+  .fare{ font-weight:700; }
+  .book-btn{
+    background:var(--indigo-600);
+    color:#fff;
+    border:none;
+    padding:11px 20px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .book-btn:hover{ background:var(--indigo-700); }
+
+  /* Bookings table card */
+  .bookings-card h2{ margin-bottom:16px; }
+  table{
+    width:100%;
+    border-collapse:collapse;
+  }
+  thead th{
+    background:#e5e7eb;
+    text-align:left;
+    font-weight:600;
+    color:var(--text-mid);
+    font-size:14px;
+    padding:12px 14px;
+  }
+  tbody td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    font-size:14px;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  .route-cell{ font-weight:700; }
+  .cancel-btn{
+    background:#fecaca;
+    color:#b91c1c;
+    border:none;
+    padding:7px 16px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:13px;
+  }
+  .cancel-btn:hover{ background:#fca5a5; }
+  .empty-row td{
+    text-align:center;
+    color:var(--text-mid);
+    padding:24px;
+    font-style:italic;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Ride Sharing System 🚗</div>
+  <nav>
+    <a href="#">Dashboard</a>
+    <a href="#">Reviews</a>
+    <span class="user-pill"><span class="status-dot"></span> Musa</span>
+    <button class="logout-btn">Logout</button>
+  </nav>
+</header>
+
+<main>
+  <p class="greeting">Find and book rides, <b>Musa</b>.</p>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-label">Total Bookings</div>
+      <div class="stat-value total" id="totalCount">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Completed</div>
+      <div class="stat-value completed" id="completedCount">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Cancelled</div>
+      <div class="stat-value cancelled" id="cancelledCount">0</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Search Available rides</h2>
+    <hr>
+    <div class="search-row">
+      <select id="pickup">
+        <option value="" selected disabled>Select pickup location</option>
+        <option value="origin">Origin</option>
+        <option value="downtown">Downtown</option>
+        <option value="airport">Airport</option>
+      </select>
+      <select id="destination">
+        <option value="" selected disabled>Select destination</option>
+        <option value="destination">Destination</option>
+        <option value="mall">Mall</option>
+        <option value="university">University</option>
+      </select>
+    </div>
+    <button class="search-btn" id="searchBtn">Search ride</button>
+
+    <div id="statusMsg" class="status-msg" style="display:none;"></div>
+
+    <div id="rideResult" class="ride-result" style="display:none;">
+      <div class="ride-count" id="rideCount">1 ride available</div>
+      <div class="ride-item">
+        <div class="ride-info">
+          <div class="route">Origin → Destination</div>
+          <div class="meta">31-July-2026, 8:48 am &nbsp; Ali &nbsp; Toyota Corolla ABC-1223</div>
+        </div>
+        <div class="seats-pill">2 seats</div>
+        <div class="fare">Fare (per seat): 200</div>
+        <button class="book-btn" id="bookBtn">Book now</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bookings-card">
+    <h2>Bookings</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>Departure</th>
+          <th>Driver</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="bookingsBody">
+        <tr class="empty-row"><td colspan="4">No bookings yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script>
+  // ---- State ----
+  let totalBookings = 0;
+  let completedCount = 0;
+  let cancelledCount = 0;
+  let bookings = []; // { id, route, departure, driver }
+  let bookingIdSeq = 1;
+
+  // ---- DOM refs ----
+  const totalEl = document.getElementById('totalCount');
+  const completedEl = document.getElementById('completedCount');
+  const cancelledEl = document.getElementById('cancelledCount');
+  const statusMsg = document.getElementById('statusMsg');
+  const rideResult = document.getElementById('rideResult');
+  const bookingsBody = document.getElementById('bookingsBody');
+  const searchBtn = document.getElementById('searchBtn');
+  const bookBtn = document.getElementById('bookBtn');
+  const pickupSel = document.getElementById('pickup');
+  const destSel = document.getElementById('destination');
+
+  function renderStats(){
+    totalEl.textContent = totalBookings;
+    completedEl.textContent = completedCount;
+    cancelledEl.textContent = cancelledCount;
+  }
+
+  function renderBookings(){
+    bookingsBody.innerHTML = '';
+    if(bookings.length === 0){
+      bookingsBody.innerHTML = '<tr class="empty-row"><td colspan="4">No bookings yet.</td></tr>';
+      return;
+    }
+    bookings.forEach(b => {
+      const tr = document.createElement('tr');
+      tr.dataset.id = b.id;
+      tr.innerHTML = `
+        <td class="route-cell">${b.route}</td>
+        <td>${b.departure}</td>
+        <td>${b.driver}</td>
+        <td><button class="cancel-btn" data-id="${b.id}">Cancel</button></td>
+      `;
+      bookingsBody.appendChild(tr);
+    });
+  }
+
+  function showStatus(text){
+    statusMsg.textContent = text;
+    statusMsg.style.display = 'block';
+    // auto-hide after a few seconds, like a toast-ish confirmation
+    clearTimeout(showStatus._t);
+    showStatus._t = setTimeout(() => { statusMsg.style.display = 'none'; }, 3000);
+  }
+
+  // Step 2: Search available rides
+  searchBtn.addEventListener('click', () => {
+    statusMsg.style.display = 'none';
+    rideResult.style.display = 'block';
+  });
+
+  // Step 3: Book a ride
+  bookBtn.addEventListener('click', () => {
+    const booking = {
+      id: bookingIdSeq++,
+      route: 'Origin → Destination',
+      departure: '31-July-2026, 8:48 am',
+      driver: 'Ali'
+    };
+    bookings.push(booking);
+    totalBookings++;
+
+    renderStats();
+    renderBookings();
+
+    rideResult.style.display = 'none';
+    showStatus('Ride Booked!');
+  });
+
+  // Step 4: Cancel a booking (event delegation on the table)
+  bookingsBody.addEventListener('click', (e) => {
+    const btn = e.target.closest('.cancel-btn');
+    if(!btn) return;
+
+    const id = Number(btn.dataset.id);
+    bookings = bookings.filter(b => b.id !== id);
+
+    totalBookings = Math.max(0, totalBookings - 1);
+    cancelledCount++;
+
+    renderStats();
+    renderBookings();
+    showStatus('Ride Cancelled!');
+  });
+
+  // Initial render
+  renderStats();
+  renderBookings();
+</script>
+
+</body>
+</html>

@@ -21,8 +21,8 @@ form.addEventListener("submit", async function (event) {
     }
 
     if (data.role === "driver") {
-        window.location.href = "driver-dashboard.html";
+        window.location.href = "driver";
     } else {
-        window.location.href = "passenger-dashboard.html";
+        window.location.href = "passenger.html";
     }
 });
